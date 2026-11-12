@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react'
 
 import StatCard from '../components/dashboard/StatCard'
@@ -125,7 +124,7 @@ function Dashboard() {
 
           <div className="dashboard-bottom">
             <RecentActivity />
-            <LowStockProducts />
+            <LowStockProducts products={products} />
           </div>
         </>
       )}

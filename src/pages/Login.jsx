@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import './Login.css'
 
 function Login() {
-  const { login } = useAuth()
+  const { login, sessionExpired } = useAuth()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -63,6 +63,12 @@ function Login() {
               required
             />
           </div>
+
+          {sessionExpired && !error && (
+            <p className="login-info">
+              Votre session a expiré. Veuillez vous reconnecter.
+            </p>
+          )}
 
           {error && (
             <p className="login-error">{error}</p>

@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const activityRoutes = require('./routes/activities')
 const authRoutes = require('./routes/authRoutes')
+const stockMovementRoutes = require('./routes/stockMovementRoutes')
 require('dotenv').config()
 
 const connectDB = require('./config/db')
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use('/api/products', productRoutes)
 app.use('/api/activities', activityRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/stock-movements', stockMovementRoutes)
 
 // Test Route
 app.get('/', (req, res) => {

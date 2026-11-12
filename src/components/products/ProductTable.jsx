@@ -11,7 +11,7 @@ function getProductStatus(quantity, minimum) {
 
   return 'Disponible'
 }
-function ProductTable({ products, onDelete, onEdit }) {   
+function ProductTable({ products, onDelete, onEdit, onMovement }) {
   return (
     <div className="product-table-container">
       <table className="product-table">
@@ -56,6 +56,20 @@ function ProductTable({ products, onDelete, onEdit }) {
                   </span>
                 </td>
                 <td className="product-actions">
+                  <button
+                    title="Entrée de stock"
+                    onClick={() => onMovement(product, 'entry')}
+                  >
+                    📥
+                  </button>
+
+                  <button
+                    title="Sortie de stock"
+                    onClick={() => onMovement(product, 'exit')}
+                  >
+                    📤
+                  </button>
+
                   <button
                     title="Modifier"
                     onClick={() => onEdit(product)}

@@ -14,8 +14,15 @@ const activitySchema = new mongoose.Schema(
       enum: [
         'Ajout de produit',
         'Modification de produit',
-        'Suppression de produit'
+        'Suppression de produit',
+        'Entrée de stock',
+        'Sortie de stock'
       ]
+    },
+
+    user: {
+      type: String,
+      default: ''
     },
 
     status: {

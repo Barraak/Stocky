@@ -7,9 +7,9 @@ function ProductForm({ onClose, onSave, product }) {
     name: product?.name || '',
     reference: product?.reference || '',
     category: product?.category || '',
-    price: product?.price || '',
-    quantity: product?.quantity || '',
-    minimum: product?.minimum || ''
+    price: product?.price ?? '',
+    quantity: product?.quantity ?? '',
+    minimum: product?.minimum ?? ''
     })
 
   function handleChange(e) {
@@ -101,15 +101,25 @@ function ProductForm({ onClose, onSave, product }) {
             </div>
 
             <div className="form-group">
-              <label>Quantité</label>
+              <label>
+                {product ? 'Quantité en stock' : 'Quantité initiale'}
+              </label>
               <input
                 type="number"
                 name="quantity"
                 value={formData.quantity}
                 onChange={handleChange}
                 min="0"
+                disabled={Boolean(product)}
                 required
               />
+
+              {product && (
+                <small className="form-hint">
+                  Pour modifier le stock, utilisez les boutons
+                  Entrée / Sortie.
+                </small>
+              )}
             </div>
           </div>
 

@@ -1,37 +1,7 @@
-
-import { useState, useEffect } from 'react'
-
-import apiFetch from '../../services/api'
-
 import './LowStockProducts.css'
 
-function LowStockProducts() {
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-
-  // Fetch products from MongoDB
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const response = await apiFetch('/products')
-        const data = await response.json()
-
-        if (!response.ok) {
-          throw new Error(data.message || 'Erreur de chargement')
-        }
-
-        setProducts(data)
-      } catch (error) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchProducts()
-  }, [])
-
+// Receives the products from the Dashboard (no extra API call)
+function LowStockProducts({ products = [] }) {
   // Filter low stock products
   const lowStockProducts = products.filter((product) => {
     return (
@@ -50,19 +20,11 @@ function LowStockProducts() {
 
       <div className="low-stock-list">
 
-        {loading && (
-          <p>Chargement des produits...</p>
-        )}
-
-        {error && (
-          <p className="error-message">{error}</p>
-        )}
-
-        {!loading && !error && lowStockProducts.length === 0 && (
+        {lowStockProducts.length === 0 && (
           <p>Aucun produit en stock faible.</p>
         )}
 
-        {!loading && !error && lowStockProducts.map((product) => (
+        {lowStockProducts.map((product) => (
           <div className="low-stock-item" key={product._id}>
 
             <div className="product-info">

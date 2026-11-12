@@ -6,6 +6,7 @@ import ProductToolbar from '../components/products/ProductToolbar'
 import ProductTable from '../components/products/ProductTable'
 import ProductForm from '../components/products/ProductForm'
 import DeleteProductModal from '../components/products/DeleteProductModal'
+import StockMovementModal from '../components/products/StockMovementModal'
 
 import apiFetch from '../services/api'
 
@@ -31,6 +32,7 @@ function Products() {
   const [showForm, setShowForm] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [productToDelete, setProductToDelete] = useState(null)
+  const [movementTarget, setMovementTarget] = useState(null)
 
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -110,6 +112,11 @@ function Products() {
         minimum: Number(productData.minimum)
       }
 
+      // The quantity only changes through stock movements
+      if (isEditing) {
+        delete payload.quantity
+      }
+
       const response = await apiFetch(url, {
         method,
         body: JSON.stringify(payload)
@@ -186,6 +193,41 @@ function Products() {
     }
   }
 
+  // Open stock movement modal (entry / exit)
+  function handleMovement(product, type) {
+    setMovementTarget({ product, type })
+  }
+
+  // POST: Save a stock movement
+  // Throws on error so the modal can display the message
+  async function handleMovementSave({ type, quantity, reason }) {
+    const response = await apiFetch('/stock-movements', {
+      method: 'POST',
+      body: JSON.stringify({
+        productId: movementTarget.product._id,
+        type,
+        quantity,
+        reason
+      })
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Erreur lors du mouvement de stock')
+    }
+
+    const updatedProduct = normalizeProduct(data.product)
+
+    setProducts((currentProducts) =>
+      currentProducts.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      )
+    )
+
+    setMovementTarget(null)
+  }
+
   // Reset filters
   function handleResetFilters() {
     setSearchTerm('')
@@ -221,6 +263,16 @@ function Products() {
           products={filteredProducts}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          onMovement={handleMovement}
+        />
+      )}
+
+      {movementTarget && (
+        <StockMovementModal
+          product={movementTarget.product}
+          type={movementTarget.type}
+          onClose={() => setMovementTarget(null)}
+          onSave={handleMovementSave}
         />
       )}
 

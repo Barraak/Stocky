@@ -1,5 +1,25 @@
 const Product = require('../models/Product')
+const StockMovement = require('../models/StockMovement')
 const { createActivity } = require('./activityController')
+
+// Fields a client may send. The quantity is NOT in the update list:
+// after creation, it only changes through stock movements.
+const UPDATE_FIELDS = ['name', 'reference', 'category', 'price', 'minimum']
+const CREATE_FIELDS = [...UPDATE_FIELDS, 'quantity']
+
+// Keep only the allowed fields that were actually sent
+function pickFields(source, fields) {
+  const result = {}
+
+  for (const field of fields) {
+    if (source[field] !== undefined) {
+      result[field] = source[field]
+    }
+  }
+
+  return result
+}
+
 // Get all products
 const getProducts = async (req, res) => {
   try {
@@ -13,9 +33,31 @@ const getProducts = async (req, res) => {
 // Create a product
 const createProduct = async (req, res) => {
   try {
-    const product = await Product.create(req.body)
+    const product = await Product.create(
+      pickFields(req.body, CREATE_FIELDS)
+    )
 
-    await createActivity(product.name, 'Ajout de produit')
+    // Record the starting quantity as the first stock movement
+    if (product.quantity > 0) {
+      try {
+        await StockMovement.create({
+          product: product._id,
+          productName: product.name,
+          productReference: product.reference,
+          type: 'entry',
+          quantity: product.quantity,
+          quantityBefore: 0,
+          quantityAfter: product.quantity,
+          reason: 'Stock initial',
+          user: req.user._id,
+          userName: req.user.name
+        })
+      } catch (error) {
+        console.error('Initial stock movement failed:', error.message)
+      }
+    }
+
+    await createActivity(product.name, 'Ajout de produit', req.user?.name)
 
     res.status(201).json(product)
   } catch (error) {
@@ -27,7 +69,7 @@ const updateProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      pickFields(req.body, UPDATE_FIELDS),
       { new: true, runValidators: true }
     )
 
@@ -35,7 +77,7 @@ const updateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' })
     }
 
-    await createActivity(product.name, 'Modification de produit')
+    await createActivity(product.name, 'Modification de produit', req.user?.name)
 
     res.status(200).json(product)
   } catch (error) {
@@ -51,7 +93,7 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' })
     }
 
-    await createActivity(product.name, 'Suppression de produit')
+    await createActivity(product.name, 'Suppression de produit', req.user?.name)
 
     res.status(200).json({ message: 'Product deleted successfully' })
   } catch (error) {

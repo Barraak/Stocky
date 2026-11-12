@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import Products from './pages/Products'
+import Movements from './pages/Movements'
 
 import './App.css'
 
@@ -30,6 +31,10 @@ function App() {
       return <Products />
     }
 
+    if (activePage === 'Movements') {
+      return <Movements />
+    }
+
     return <h2>Cette page sera bientôt disponible.</h2>
   }
 
@@ -41,7 +46,7 @@ function App() {
       />
 
       <main className="main-content">
-        <Header />
+        <Header onNavigate={setActivePage} />
         {renderPage()}
       </main>
     </div>

@@ -5,6 +5,7 @@ import './Sidebar.css'
 const menuItems = [
   { name: 'Dashboard', icon: 'grid' },
   { name: 'Products', icon: 'package' },
+  { name: 'Movements', icon: 'swap' },
   { name: 'Categories', icon: 'layers' },
   { name: 'Suppliers', icon: 'truck' },
   { name: 'Reports', icon: 'chart' }
@@ -34,6 +35,12 @@ function SidebarIcon({ type }) {
       <path d="M15 10h4l3 4v4h-7" />
       <circle cx="7.5" cy="18" r="2" />
       <circle cx="18.5" cy="18" r="2" />
+    </>,
+    swap: <>
+      <path d="M7 7h13" />
+      <path d="m16 3 4 4-4 4" />
+      <path d="M17 17H4" />
+      <path d="m8 13-4 4 4 4" />
     </>,
     chart: <>
       <path d="M3 3v18h18" />

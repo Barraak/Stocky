@@ -1,7 +1,7 @@
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
-import apiFetch from '../services/api'
+import apiFetch, { AUTH_EXPIRED_EVENT } from '../services/api'
 
 const AuthContext = createContext(null)
 
@@ -14,6 +14,26 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => {
     return localStorage.getItem('token')
   })
+
+  const [sessionExpired, setSessionExpired] = useState(false)
+
+  // Log the user out automatically when the API says the token is invalid
+  useEffect(() => {
+    function handleSessionExpired() {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+
+      setToken(null)
+      setUser(null)
+      setSessionExpired(true)
+    }
+
+    window.addEventListener(AUTH_EXPIRED_EVENT, handleSessionExpired)
+
+    return () => {
+      window.removeEventListener(AUTH_EXPIRED_EVENT, handleSessionExpired)
+    }
+  }, [])
 
   // Login
   async function login(email, password) {
@@ -33,6 +53,7 @@ export function AuthProvider({ children }) {
 
     setToken(data.token)
     setUser(data.user)
+    setSessionExpired(false)
 
     return data.user
   }
@@ -50,6 +71,7 @@ export function AuthProvider({ children }) {
     user,
     token,
     isAuthenticated: Boolean(token && user),
+    sessionExpired,
     login,
     logout
   }

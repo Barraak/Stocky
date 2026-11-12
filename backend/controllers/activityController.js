@@ -15,10 +15,11 @@ const getActivities = async (req, res) => {
 }
 
 // Create an activity
-const createActivity = async (product, action) => {
+const createActivity = async (product, action, user = '') => {
   return await Activity.create({
     product,
-    action
+    action,
+    user
   })
 }
 

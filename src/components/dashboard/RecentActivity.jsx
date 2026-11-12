@@ -62,6 +62,7 @@ function RecentActivity() {
             <tr>
               <th>Produit</th>
               <th>Action</th>
+              <th>Utilisateur</th>
               <th>Date</th>
               <th>Statut</th>
             </tr>
@@ -72,6 +73,7 @@ function RecentActivity() {
               <tr key={activity._id}>
                 <td>{activity.product}</td>
                 <td>{activity.action}</td>
+                <td>{activity.user || '—'}</td>
                 <td>{formatDate(activity.createdAt)}</td>
                 <td>
                   <span className="activity-status completed">
