@@ -1,0 +1,33 @@
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global Styles */
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background-color: #f3f4f6;
+  color: #111827;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* React Root */
+#root {
+  min-height: 100vh;
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Inputs */
+input {
+  font-family: inherit;
+  font-size: inherit;
+}

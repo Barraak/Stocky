@@ -1,0 +1,14 @@
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 35px;
+  background: #f5f6fa;
+  box-sizing: border-box;
+}

@@ -1,0 +1,93 @@
+
+.recent-activity {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  overflow-x: auto;
+  min-width: 0;
+  transition: box-shadow 0.25s ease;
+}
+
+.recent-activity:hover {
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.activity-header h3 {
+  color: #111827;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.activity-header span {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.activity-header span:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.activity-table th {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 14px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.activity-table td {
+  color: #374151;
+  font-size: 13px;
+  padding: 16px 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.activity-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.activity-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.activity-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.activity-status {
+  display: inline-block;
+  padding: 6px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.completed {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.pending {
+  background-color: #fef3c7;
+  color: #b45309;
+}

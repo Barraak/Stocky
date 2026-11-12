@@ -1,0 +1,143 @@
+
+.header {
+  height: 68px;
+  min-height: 68px;
+
+  position: sticky;
+  top: 12px;
+  z-index: 100;
+
+  background-color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 28px;
+  margin-bottom: 25px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.header-logo {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111827;
+  color: #ffffff;
+  border-radius: 9px;
+}
+
+.header-logo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.header-brand h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  color: #111827;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header-search {
+  width: 220px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 12px;
+  background: #f3f4f6;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+
+.header-search:focus-within {
+  border-color: #93c5fd;
+  background: #ffffff;
+}
+
+.header-search svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #9ca3af;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.header-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: #111827;
+}
+
+.header-search input::placeholder {
+  color: #9ca3af;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 0 14px;
+  }
+
+  .header-actions {
+    gap: 10px;
+  }
+
+  .header-search {
+    width: 145px;
+  }
+
+  .user-profile span {
+    display: none;
+  }
+}
